@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.mapper.OmsOrderStageMapper">
+  <resultMap id="BaseResultMap" type="com.macro.mall.model.OmsOrderStage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+    <result column="order_item_id" jdbcType="BIGINT" property="orderItemId" />
+    <result column="stage_num" jdbcType="INTEGER" property="stageNum" />
+    <result column="buyout_type" jdbcType="INTEGER" property="buyoutType" />
+    <result column="bill_content" jdbcType="VARCHAR" property="billContent" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="pay_no" jdbcType="INTEGER" property="payNo" />
+    <result column="period_price" jdbcType="DECIMAL" property="periodPrice" />
+    <result column="repayment_time" jdbcType="TIMESTAMP" property="repaymentTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="is_over" jdbcType="INTEGER" property="isOver" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="flowing_sn" jdbcType="VARCHAR" property="flowingSn" />
+    <result column="bill_type" jdbcType="INTEGER" property="billType" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="over_price" jdbcType="DECIMAL" property="overPrice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_id, order_sn, order_item_id, stage_num, buyout_type, bill_content, status,
+    pay_no, period_price, repayment_time, create_time, update_time, member_id, is_over,
+    pay_type, flowing_sn, bill_type, pay_time, pay_price, over_price
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.mall.model.OmsOrderStageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_order_stage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from oms_order_stage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from oms_order_stage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.mall.model.OmsOrderStageExample">
+    delete from oms_order_stage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.mall.model.OmsOrderStage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_order_stage (order_id, order_sn, order_item_id,
+    stage_num, buyout_type, bill_content,
+    status, pay_no, period_price,
+    repayment_time, create_time, update_time,
+    member_id, is_over, pay_type,
+    flowing_sn, bill_type, pay_time,
+    pay_price, over_price)
+    values (#{orderId,jdbcType=BIGINT}, #{orderSn,jdbcType=VARCHAR}, #{orderItemId,jdbcType=BIGINT},
+    #{stageNum,jdbcType=INTEGER}, #{buyoutType,jdbcType=INTEGER}, #{billContent,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER}, #{payNo,jdbcType=INTEGER}, #{periodPrice,jdbcType=DECIMAL},
+    #{repaymentTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{memberId,jdbcType=BIGINT}, #{isOver,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER},
+    #{flowingSn,jdbcType=VARCHAR}, #{billType,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP},
+    #{payPrice,jdbcType=DECIMAL}, #{overPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.mall.model.OmsOrderStage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_order_stage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderSn != null">
+        order_sn,
+      </if>
+      <if test="orderItemId != null">
+        order_item_id,
+      </if>
+      <if test="stageNum != null">
+        stage_num,
+      </if>
+      <if test="buyoutType != null">
+        buyout_type,
+      </if>
+      <if test="billContent != null">
+        bill_content,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+      <if test="periodPrice != null">
+        period_price,
+      </if>
+      <if test="repaymentTime != null">
+        repayment_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="isOver != null">
+        is_over,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="flowingSn != null">
+        flowing_sn,
+      </if>
+      <if test="billType != null">
+        bill_type,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+      <if test="overPrice != null">
+        over_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+        #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="stageNum != null">
+        #{stageNum,jdbcType=INTEGER},
+      </if>
+      <if test="buyoutType != null">
+        #{buyoutType,jdbcType=INTEGER},
+      </if>
+      <if test="billContent != null">
+        #{billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=INTEGER},
+      </if>
+      <if test="periodPrice != null">
+        #{periodPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentTime != null">
+        #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="isOver != null">
+        #{isOver,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="flowingSn != null">
+        #{flowingSn,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        #{billType,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="overPrice != null">
+        #{overPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.mall.model.OmsOrderStageExample" resultType="java.lang.Long">
+    select count(*) from oms_order_stage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update oms_order_stage
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.orderId != null">
+        order_id = #{row.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="row.orderSn != null">
+        order_sn = #{row.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="row.orderItemId != null">
+        order_item_id = #{row.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="row.stageNum != null">
+        stage_num = #{row.stageNum,jdbcType=INTEGER},
+      </if>
+      <if test="row.buyoutType != null">
+        buyout_type = #{row.buyoutType,jdbcType=INTEGER},
+      </if>
+      <if test="row.billContent != null">
+        bill_content = #{row.billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="row.status != null">
+        status = #{row.status,jdbcType=INTEGER},
+      </if>
+      <if test="row.payNo != null">
+        pay_no = #{row.payNo,jdbcType=INTEGER},
+      </if>
+      <if test="row.periodPrice != null">
+        period_price = #{row.periodPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="row.repaymentTime != null">
+        repayment_time = #{row.repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.createTime != null">
+        create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updateTime != null">
+        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.memberId != null">
+        member_id = #{row.memberId,jdbcType=BIGINT},
+      </if>
+      <if test="row.isOver != null">
+        is_over = #{row.isOver,jdbcType=INTEGER},
+      </if>
+      <if test="row.payType != null">
+        pay_type = #{row.payType,jdbcType=INTEGER},
+      </if>
+      <if test="row.flowingSn != null">
+        flowing_sn = #{row.flowingSn,jdbcType=VARCHAR},
+      </if>
+      <if test="row.billType != null">
+        bill_type = #{row.billType,jdbcType=INTEGER},
+      </if>
+      <if test="row.payTime != null">
+        pay_time = #{row.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.payPrice != null">
+        pay_price = #{row.payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="row.overPrice != null">
+        over_price = #{row.overPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update oms_order_stage
+    set id = #{row.id,jdbcType=BIGINT},
+    order_id = #{row.orderId,jdbcType=BIGINT},
+    order_sn = #{row.orderSn,jdbcType=VARCHAR},
+    order_item_id = #{row.orderItemId,jdbcType=BIGINT},
+    stage_num = #{row.stageNum,jdbcType=INTEGER},
+    buyout_type = #{row.buyoutType,jdbcType=INTEGER},
+    bill_content = #{row.billContent,jdbcType=VARCHAR},
+    status = #{row.status,jdbcType=INTEGER},
+    pay_no = #{row.payNo,jdbcType=INTEGER},
+    period_price = #{row.periodPrice,jdbcType=DECIMAL},
+    repayment_time = #{row.repaymentTime,jdbcType=TIMESTAMP},
+    create_time = #{row.createTime,jdbcType=TIMESTAMP},
+    update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+    member_id = #{row.memberId,jdbcType=BIGINT},
+    is_over = #{row.isOver,jdbcType=INTEGER},
+    pay_type = #{row.payType,jdbcType=INTEGER},
+    flowing_sn = #{row.flowingSn,jdbcType=VARCHAR},
+    bill_type = #{row.billType,jdbcType=INTEGER},
+    pay_time = #{row.payTime,jdbcType=TIMESTAMP},
+    pay_price = #{row.payPrice,jdbcType=DECIMAL},
+    over_price = #{row.overPrice,jdbcType=DECIMAL}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.model.OmsOrderStage">
+    update oms_order_stage
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSn != null">
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+        order_item_id = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="stageNum != null">
+        stage_num = #{stageNum,jdbcType=INTEGER},
+      </if>
+      <if test="buyoutType != null">
+        buyout_type = #{buyoutType,jdbcType=INTEGER},
+      </if>
+      <if test="billContent != null">
+        bill_content = #{billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=INTEGER},
+      </if>
+      <if test="periodPrice != null">
+        period_price = #{periodPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentTime != null">
+        repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="isOver != null">
+        is_over = #{isOver,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="flowingSn != null">
+        flowing_sn = #{flowingSn,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        bill_type = #{billType,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="overPrice != null">
+        over_price = #{overPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.OmsOrderStage">
+    update oms_order_stage
+    set order_id = #{orderId,jdbcType=BIGINT},
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+        order_item_id = #{orderItemId,jdbcType=BIGINT},
+        stage_num = #{stageNum,jdbcType=INTEGER},
+        buyout_type = #{buyoutType,jdbcType=INTEGER},
+        bill_content = #{billContent,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        pay_no = #{payNo,jdbcType=INTEGER},
+        period_price = #{periodPrice,jdbcType=DECIMAL},
+        repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        member_id = #{memberId,jdbcType=BIGINT},
+        is_over = #{isOver,jdbcType=INTEGER},
+        pay_type = #{payType,jdbcType=INTEGER},
+        flowing_sn = #{flowingSn,jdbcType=VARCHAR},
+        bill_type = #{billType,jdbcType=INTEGER},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        pay_price = #{payPrice,jdbcType=DECIMAL},
+        over_price = #{overPrice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.mapper.TRiskReportMapper">
+    <resultMap id="BaseResultMap" type="com.macro.mall.model.TRiskReport">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="id_number" jdbcType="VARCHAR" property="idNumber"/>
+        <result column="report_code" jdbcType="VARCHAR" property="reportCode"/>
+        <result column="base_info" jdbcType="VARCHAR" property="baseInfo"/>
+        <result column="court_risk_info_list" jdbcType="VARCHAR" property="courtRiskInfoList"/>
+        <result column="hit_risk_tagging" jdbcType="VARCHAR" property="hitRiskTagging"/>
+        <result column="personal_loan_demand" jdbcType="VARCHAR" property="personalLoanDemand"/>
+        <result column="personal_loan_f" jdbcType="VARCHAR" property="personalLoanF"/>
+        <result column="personal_loan_s" jdbcType="VARCHAR" property="personalLoanS"/>
+        <result column="personal_loan_h" jdbcType="VARCHAR" property="personalLoanH"/>
+        <result column="personal_overdue_history" jdbcType="VARCHAR" property="personalOverdueHistory"/>
+        <result column="relevance_risk_check" jdbcType="VARCHAR" property="relevanceRiskCheck"/>
+        <result column="risk_list_check" jdbcType="VARCHAR" property="riskListCheck"/>
+        <result column="rent_history" jdbcType="VARCHAR" property="rentHistory"/>
+        <result column="ident_info_dict" jdbcType="VARCHAR" property="identInfoDict"/>
+        <result column="verify_recomment" jdbcType="VARCHAR" property="verifyRecomment"/>
+        <result column="score_norm_explain" jdbcType="VARCHAR" property="scoreNormExplain"/>
+        <result column="suggest_cash" jdbcType="INTEGER" property="suggestCash"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, name, id_number, report_code, base_info, court_risk_info_list, hit_risk_tagging,
+    personal_loan_demand, personal_loan_f, personal_loan_s, personal_loan_h, personal_overdue_history,
+    relevance_risk_check, risk_list_check, rent_history, ident_info_dict, verify_recomment,
+    score_norm_explain, suggest_cash, status, create_time, update_time
+    </sql>
+    <select id="selectByExample" parameterType="com.macro.mall.model.TRiskReportExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_risk_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_risk_report
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_risk_report
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.macro.mall.model.TRiskReportExample">
+        delete from t_risk_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.macro.mall.model.TRiskReport">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_risk_report (name, id_number, report_code,
+        base_info, court_risk_info_list, hit_risk_tagging,
+        personal_loan_demand, personal_loan_f, personal_loan_s,
+        personal_loan_h, personal_overdue_history,
+        relevance_risk_check, risk_list_check, rent_history,
+        ident_info_dict, verify_recomment, score_norm_explain,
+        suggest_cash, status, create_time,
+        update_time)
+        values (#{name,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, #{reportCode,jdbcType=VARCHAR},
+        #{baseInfo,jdbcType=VARCHAR}, #{courtRiskInfoList,jdbcType=VARCHAR}, #{hitRiskTagging,jdbcType=VARCHAR},
+        #{personalLoanDemand,jdbcType=VARCHAR}, #{personalLoanF,jdbcType=VARCHAR}, #{personalLoanS,jdbcType=VARCHAR},
+        #{personalLoanH,jdbcType=VARCHAR}, #{personalOverdueHistory,jdbcType=VARCHAR},
+        #{relevanceRiskCheck,jdbcType=VARCHAR}, #{riskListCheck,jdbcType=VARCHAR}, #{rentHistory,jdbcType=VARCHAR},
+        #{identInfoDict,jdbcType=VARCHAR}, #{verifyRecomment,jdbcType=VARCHAR}, #{scoreNormExplain,jdbcType=VARCHAR},
+        #{suggestCash,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.macro.mall.model.TRiskReport">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_risk_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="idNumber != null">
+                id_number,
+            </if>
+            <if test="reportCode != null">
+                report_code,
+            </if>
+            <if test="baseInfo != null">
+                base_info,
+            </if>
+            <if test="courtRiskInfoList != null">
+                court_risk_info_list,
+            </if>
+            <if test="hitRiskTagging != null">
+                hit_risk_tagging,
+            </if>
+            <if test="personalLoanDemand != null">
+                personal_loan_demand,
+            </if>
+            <if test="personalLoanF != null">
+                personal_loan_f,
+            </if>
+            <if test="personalLoanS != null">
+                personal_loan_s,
+            </if>
+            <if test="personalLoanH != null">
+                personal_loan_h,
+            </if>
+            <if test="personalOverdueHistory != null">
+                personal_overdue_history,
+            </if>
+            <if test="relevanceRiskCheck != null">
+                relevance_risk_check,
+            </if>
+            <if test="riskListCheck != null">
+                risk_list_check,
+            </if>
+            <if test="rentHistory != null">
+                rent_history,
+            </if>
+            <if test="identInfoDict != null">
+                ident_info_dict,
+            </if>
+            <if test="verifyRecomment != null">
+                verify_recomment,
+            </if>
+            <if test="scoreNormExplain != null">
+                score_norm_explain,
+            </if>
+            <if test="suggestCash != null">
+                suggest_cash,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="reportCode != null">
+                #{reportCode,jdbcType=VARCHAR},
+            </if>
+            <if test="baseInfo != null">
+                #{baseInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="courtRiskInfoList != null">
+                #{courtRiskInfoList,jdbcType=VARCHAR},
+            </if>
+            <if test="hitRiskTagging != null">
+                #{hitRiskTagging,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanDemand != null">
+                #{personalLoanDemand,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanF != null">
+                #{personalLoanF,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanS != null">
+                #{personalLoanS,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanH != null">
+                #{personalLoanH,jdbcType=VARCHAR},
+            </if>
+            <if test="personalOverdueHistory != null">
+                #{personalOverdueHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="relevanceRiskCheck != null">
+                #{relevanceRiskCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="riskListCheck != null">
+                #{riskListCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="rentHistory != null">
+                #{rentHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="identInfoDict != null">
+                #{identInfoDict,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyRecomment != null">
+                #{verifyRecomment,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreNormExplain != null">
+                #{scoreNormExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="suggestCash != null">
+                #{suggestCash,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.macro.mall.model.TRiskReportExample" resultType="java.lang.Long">
+        select count(*) from t_risk_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_risk_report
+        <set>
+            <if test="row.id != null">
+                id = #{row.id,jdbcType=BIGINT},
+            </if>
+            <if test="row.name != null">
+                name = #{row.name,jdbcType=VARCHAR},
+            </if>
+            <if test="row.idNumber != null">
+                id_number = #{row.idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="row.reportCode != null">
+                report_code = #{row.reportCode,jdbcType=VARCHAR},
+            </if>
+            <if test="row.baseInfo != null">
+                base_info = #{row.baseInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="row.courtRiskInfoList != null">
+                court_risk_info_list = #{row.courtRiskInfoList,jdbcType=VARCHAR},
+            </if>
+            <if test="row.hitRiskTagging != null">
+                hit_risk_tagging = #{row.hitRiskTagging,jdbcType=VARCHAR},
+            </if>
+            <if test="row.personalLoanDemand != null">
+                personal_loan_demand = #{row.personalLoanDemand,jdbcType=VARCHAR},
+            </if>
+            <if test="row.personalLoanF != null">
+                personal_loan_f = #{row.personalLoanF,jdbcType=VARCHAR},
+            </if>
+            <if test="row.personalLoanS != null">
+                personal_loan_s = #{row.personalLoanS,jdbcType=VARCHAR},
+            </if>
+            <if test="row.personalLoanH != null">
+                personal_loan_h = #{row.personalLoanH,jdbcType=VARCHAR},
+            </if>
+            <if test="row.personalOverdueHistory != null">
+                personal_overdue_history = #{row.personalOverdueHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="row.relevanceRiskCheck != null">
+                relevance_risk_check = #{row.relevanceRiskCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="row.riskListCheck != null">
+                risk_list_check = #{row.riskListCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="row.rentHistory != null">
+                rent_history = #{row.rentHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="row.identInfoDict != null">
+                ident_info_dict = #{row.identInfoDict,jdbcType=VARCHAR},
+            </if>
+            <if test="row.verifyRecomment != null">
+                verify_recomment = #{row.verifyRecomment,jdbcType=VARCHAR},
+            </if>
+            <if test="row.scoreNormExplain != null">
+                score_norm_explain = #{row.scoreNormExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="row.suggestCash != null">
+                suggest_cash = #{row.suggestCash,jdbcType=INTEGER},
+            </if>
+            <if test="row.status != null">
+                status = #{row.status,jdbcType=INTEGER},
+            </if>
+            <if test="row.createTime != null">
+                create_time = #{row.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="row.updateTime != null">
+                update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="example != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_risk_report
+        set id = #{row.id,jdbcType=BIGINT},
+        name = #{row.name,jdbcType=VARCHAR},
+        id_number = #{row.idNumber,jdbcType=VARCHAR},
+        report_code = #{row.reportCode,jdbcType=VARCHAR},
+        base_info = #{row.baseInfo,jdbcType=VARCHAR},
+        court_risk_info_list = #{row.courtRiskInfoList,jdbcType=VARCHAR},
+        hit_risk_tagging = #{row.hitRiskTagging,jdbcType=VARCHAR},
+        personal_loan_demand = #{row.personalLoanDemand,jdbcType=VARCHAR},
+        personal_loan_f = #{row.personalLoanF,jdbcType=VARCHAR},
+        personal_loan_s = #{row.personalLoanS,jdbcType=VARCHAR},
+        personal_loan_h = #{row.personalLoanH,jdbcType=VARCHAR},
+        personal_overdue_history = #{row.personalOverdueHistory,jdbcType=VARCHAR},
+        relevance_risk_check = #{row.relevanceRiskCheck,jdbcType=VARCHAR},
+        risk_list_check = #{row.riskListCheck,jdbcType=VARCHAR},
+        rent_history = #{row.rentHistory,jdbcType=VARCHAR},
+        ident_info_dict = #{row.identInfoDict,jdbcType=VARCHAR},
+        verify_recomment = #{row.verifyRecomment,jdbcType=VARCHAR},
+        score_norm_explain = #{row.scoreNormExplain,jdbcType=VARCHAR},
+        suggest_cash = #{row.suggestCash,jdbcType=INTEGER},
+        status = #{row.status,jdbcType=INTEGER},
+        create_time = #{row.createTime,jdbcType=TIMESTAMP},
+        update_time = #{row.updateTime,jdbcType=TIMESTAMP}
+        <if test="example != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.model.TRiskReport">
+        update t_risk_report
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                id_number = #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="reportCode != null">
+                report_code = #{reportCode,jdbcType=VARCHAR},
+            </if>
+            <if test="baseInfo != null">
+                base_info = #{baseInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="courtRiskInfoList != null">
+                court_risk_info_list = #{courtRiskInfoList,jdbcType=VARCHAR},
+            </if>
+            <if test="hitRiskTagging != null">
+                hit_risk_tagging = #{hitRiskTagging,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanDemand != null">
+                personal_loan_demand = #{personalLoanDemand,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanF != null">
+                personal_loan_f = #{personalLoanF,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanS != null">
+                personal_loan_s = #{personalLoanS,jdbcType=VARCHAR},
+            </if>
+            <if test="personalLoanH != null">
+                personal_loan_h = #{personalLoanH,jdbcType=VARCHAR},
+            </if>
+            <if test="personalOverdueHistory != null">
+                personal_overdue_history = #{personalOverdueHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="relevanceRiskCheck != null">
+                relevance_risk_check = #{relevanceRiskCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="riskListCheck != null">
+                risk_list_check = #{riskListCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="rentHistory != null">
+                rent_history = #{rentHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="identInfoDict != null">
+                ident_info_dict = #{identInfoDict,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyRecomment != null">
+                verify_recomment = #{verifyRecomment,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreNormExplain != null">
+                score_norm_explain = #{scoreNormExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="suggestCash != null">
+                suggest_cash = #{suggestCash,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.TRiskReport">
+        update t_risk_report
+        set name                     = #{name,jdbcType=VARCHAR},
+            id_number                = #{idNumber,jdbcType=VARCHAR},
+            report_code              = #{reportCode,jdbcType=VARCHAR},
+            base_info                = #{baseInfo,jdbcType=VARCHAR},
+            court_risk_info_list     = #{courtRiskInfoList,jdbcType=VARCHAR},
+            hit_risk_tagging         = #{hitRiskTagging,jdbcType=VARCHAR},
+            personal_loan_demand     = #{personalLoanDemand,jdbcType=VARCHAR},
+            personal_loan_f          = #{personalLoanF,jdbcType=VARCHAR},
+            personal_loan_s          = #{personalLoanS,jdbcType=VARCHAR},
+            personal_loan_h          = #{personalLoanH,jdbcType=VARCHAR},
+            personal_overdue_history = #{personalOverdueHistory,jdbcType=VARCHAR},
+            relevance_risk_check     = #{relevanceRiskCheck,jdbcType=VARCHAR},
+            risk_list_check          = #{riskListCheck,jdbcType=VARCHAR},
+            rent_history             = #{rentHistory,jdbcType=VARCHAR},
+            ident_info_dict          = #{identInfoDict,jdbcType=VARCHAR},
+            verify_recomment         = #{verifyRecomment,jdbcType=VARCHAR},
+            score_norm_explain       = #{scoreNormExplain,jdbcType=VARCHAR},
+            suggest_cash             = #{suggestCash,jdbcType=INTEGER},
+            status                   = #{status,jdbcType=INTEGER},
+            create_time              = #{createTime,jdbcType=TIMESTAMP},
+            update_time              = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.dao.PmsProductDao">
+    <resultMap id="updateInfoMap" type="com.macro.mall.dto.PmsProductResult"
+               extends="com.macro.mall.mapper.PmsProductMapper.BaseResultMap">
+        <result column="cateParentId" jdbcType="BIGINT" property="cateParentId"/>
+        <collection property="skuStockList" columnPrefix="sku_"
+                    resultMap="com.macro.mall.mapper.PmsSkuStockMapper.BaseResultMap"/>
+        <collection property="productRentList" ofType="com.macro.mall.model.PmsProductRent">
+            <id column="stages_id" jdbcType="BIGINT" property="id"/>
+            <result column="stages_skuId" jdbcType="INTEGER" property="skuId"/>
+            <result column="stages" jdbcType="INTEGER" property="stages"/>
+            <result column="stages_price" jdbcType="DECIMAL" property="stagesPrice"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUpdateInfo" resultMap="updateInfoMap">
+        SELECT *,
+               pc.parent_id      cateParentId,
+               s.id              sku_id,
+               s.product_id      sku_product_id,
+               s.price           sku_price,
+               s.promotion_price sku_promotion_price,
+               s.low_stock       sku_low_stock,
+               s.pic             sku_pic,
+               s.sale            sku_sale,
+               s.sku_code        sku_sku_code,
+               s.stock           sku_stock,
+               s.sp_data         sku_sp_data,
+               r.id              stages_id,
+               r.sku_id          stages_skuId,
+               r.stages          stages,
+               r.stages_price    stages_price
+        FROM pms_product p
+                 LEFT JOIN pms_product_category pc on pc.id = p.product_category_id
+                 LEFT JOIN pms_sku_stock s ON s.product_id = p.id
+                 LEFT JOIN pms_product_rent r ON r.sku_id = s.id
+        WHERE p.id = #{id};
+    </select>
+    <select id="selectSubjectProductRelationByProductId"
+            resultMap="com.macro.mall.mapper.CmsSubjectProductRelationMapper.BaseResultMap">
+        select *
+        from cms_subject_product_relation
+        where product_id = #{productId}
+    </select>
+    <select id="selectPrefrenceAreaProductRelationByProductId"
+            resultMap="com.macro.mall.mapper.CmsPrefrenceAreaProductRelationMapper.BaseResultMap">
+        select *
+        from cms_prefrence_area_product_relation
+        where product_id = #{productId}
+    </select>
+
+</mapper>
